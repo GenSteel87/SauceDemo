@@ -15,7 +15,9 @@ public class ProductsTest extends BaseTest {
                 "/ancestor::*[@class='inventory_item']//button")).click();
         driver.findElement(By.id("shopping_cart_container")).click();
         String productName = driver.findElement(By.cssSelector(".inventory_item_name")).getText();
+        String productPrice = driver.findElement(By.cssSelector(".inventory_item_price")).getText();
 
-        assertEquals(productName, "Sauce Labs Bike Light", "Wrong product in the cart");
+        assertEquals(productName, "Sauce Labs Bike Light", "Wrong product name in the cart");
+        assertEquals(productPrice, "$9.99", "Wrong product price in the cart");
     }
 }

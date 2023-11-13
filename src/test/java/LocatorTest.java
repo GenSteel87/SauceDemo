@@ -25,16 +25,26 @@ public class LocatorTest {
 
     @Test
     public void findElements() {
+        driver.get("https://www.saucedemo.com/");
+        driver.findElement(By.id("login-button")).click();
+        driver.findElement(By.cssSelector("[class~='login_logo']")).click();
+        driver.findElement(By.cssSelector("[class='login_logo']")).click();
         driver.get(" https://www.saucedemo.com");
-        driver.findElement(By.id("user-name"));
-        driver.findElement(By.name("user-name"));
-        driver.findElement(By.xpath("//input[@placeholder = 'Username']"));
-        driver.findElement(By.tagName("[type = text]"));
-        driver.findElement(By.id("login-button"));
-        driver.findElement(By.cssSelector(".submit-button"));
-        driver.findElement(By.className("submit-button"));
-        driver.findElement(By.xpath("//input[contains(@class, 'submit')]"));
-        driver.findElement(By.xpath("//input[contains(@class, 'submit')]"));
+        driver.findElement(By.id("user-name")).click();
+        driver.findElement(By.name("user-name")).click();
+        driver.findElement(By.cssSelector(".submit-button")).click();
+        driver.findElement(By.className("submit-button")).click();
+        driver.findElement(By.id("login-button")).click();
+        driver.findElement(By.xpath("//input[@placeholder = 'Username']")).click();
+        driver.findElement(By.id("user-name")).sendKeys("standard_user");
+        driver.findElement(By.id("password")).sendKeys("secret_sauce");
+        driver.findElement(By.xpath("//input[contains(@class, 'submit')]")).click();
+        driver.findElement(By.xpath("//*[text()='Sauce Labs Bolt T-Shirt']//ancestor::div[@class='inventory_item_description']//div[@class='inventory_item_price']")).click();
+        driver.findElement(By.xpath("//div[@id='shopping_cart_container' and @class='shopping_cart_container']")).click();
+
+
+
+
 
 
     }
