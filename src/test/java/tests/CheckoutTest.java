@@ -8,7 +8,7 @@ import static org.testng.Assert.assertEquals;
 
 public class CheckoutTest extends BaseTest {
 
-    @Test
+    @Test(description = "Пользователь может успешно оформить заказ")
     public void successfulCheckout() {
 
         loginPage.open();
@@ -33,7 +33,7 @@ public class CheckoutTest extends BaseTest {
                 "Wrong status");
 
     }
-    @Test
+    @Test(description = "Проверка формы оформления заказа")
     public void checkoutFormValidation() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
