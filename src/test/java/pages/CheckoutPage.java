@@ -16,7 +16,7 @@ public class CheckoutPage extends BasePage {
     private final By FINISH_BUTTON = By.id("finish");
     private final By CHECKOUT_STATUS = By.className("title");
     private final By BACK_HOME_BUTTON = By.className("back-to-products");
-    private final By ERROR_MESSAGE = By.xpath("//*[text()='Error: First Name is required']");
+    private final By ERROR_MESSAGE = By.cssSelector("h3");
 
     public void checkoutFillInForm(String firstName, String lastName, String zipPostalCode) {
         driver.findElement(FIRST_NAME_INPUT).sendKeys(firstName);
@@ -37,5 +37,8 @@ public class CheckoutPage extends BasePage {
     }
     public String getErrorMessage() {
         return(driver.findElement(ERROR_MESSAGE).getText());
+    }
+    public  void goToPreviousStep() {
+        driver.findElement(CANCEL_BUTTON).click();
     }
 }

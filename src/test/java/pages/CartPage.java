@@ -17,6 +17,9 @@ public class CartPage extends BasePage{
     public void isOpen() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("checkout")));
     }
+    public boolean checkoutIsDisplayed() {
+        return driver.findElement(CHECK_OUT_BUTTON).isDisplayed();
+    }
     public boolean isProductInTheCart (String product) {
         return driver.findElement(By.xpath(String.format("//div[@class='cart_item']//*[text()='%s']",product)))
                 .isDisplayed();
@@ -40,6 +43,9 @@ public class CartPage extends BasePage{
     }
     public void checkout() {
         driver.findElement(CHECK_OUT_BUTTON).click();
+    }
+    public void continueShopping() {
+        driver.findElement(CONTINUE_SHOPPING_BUTTON).click();
     }
 
 }
