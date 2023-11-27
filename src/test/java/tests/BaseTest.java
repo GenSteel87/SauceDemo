@@ -23,6 +23,7 @@ public abstract class BaseTest {
     @Parameters({"browser"})
     @BeforeMethod(description = "Browser setup")
     public void setup(@Optional("chrome") String browser) {
+        System.out.println(System.getProperty("nazvanie"));
         if(browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
