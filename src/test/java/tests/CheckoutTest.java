@@ -1,8 +1,10 @@
 package tests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class CheckoutTest extends BaseTest {
 
@@ -31,19 +33,48 @@ public class CheckoutTest extends BaseTest {
                 "Wrong status");
 
     }
-    @Test(description = "Проверка формы оформления заказа")
-    public void checkoutFormValidation() {
+    @DataProvider
+    public Object[][] userInformation() {
+        return new Object[][]{
+                {"", "Test_last_name", "12345", "Error: First Name is required"},
+                {"Test_first_name", "", "12345", "Error: Last Name is required"},
+                {"Test_first_name", "Test_last_name", "", "Error: Postal Code is required"}
+        };
+    }
+    @Test(description = "Проверка формы оформления заказа", dataProvider = "userInformation")
+    public void checkoutFormValidation(String firstName, String lastName, String zipCode, String errorMessage) {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
         productsPage.addToChart("Sauce Labs Bike Light");
         productsPage.openChart();
         cartPage.checkout();
-        checkoutPage.checkoutFillInForm("", "Test", "12345");
+        checkoutPage.checkoutFillInForm(firstName, lastName, zipCode);
         checkoutPage.goToTheSecondStep();
         assertEquals(
                 checkoutPage.getErrorMessage(),
-                "Error: First Name is required",
+                errorMessage,
                 "Error message should be displayed");
 
+    }
+    @Test(description = "При оформлении заказа пользователь может вернуться на предыдущий шаг")
+    public void goToPreviousStep() {
+        loginPage.open();
+        loginPage.login("standard_user", "secret_sauce");
+        productsPage.addToChart("Sauce Labs Bike Light");
+        productsPage.openChart();
+        cartPage.checkout();
+        checkoutPage.goToPreviousStep();
+
+        assertTrue(
+                cartPage.checkoutIsDisplayed(), "Checkout is not displayed");
+        cartPage.checkout();
+        checkoutPage.checkoutFillInForm("Test_first_name", "Test_last_name", "12345");
+        checkoutPage.goToTheSecondStep();
+        checkoutPage.goToPreviousStep();
+
+        assertEquals(
+                productsPage.getTitle(),
+                "Products",
+                "Products page is not displayed");
     }
 }

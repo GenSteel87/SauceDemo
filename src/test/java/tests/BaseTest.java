@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.testng.ITestContext;
 import org.testng.annotations.*;
 import pages.CartPage;
 import pages.CheckoutPage;
@@ -22,7 +23,7 @@ public abstract class BaseTest {
     CheckoutPage checkoutPage;
     @Parameters({"browser"})
     @BeforeMethod(description = "Browser setup")
-    public void setup(@Optional("chrome") String browser) {
+    public void setup(@Optional("chrome") String browser, ITestContext testContext) {
         System.out.println(System.getProperty("nazvanie"));
         if(browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
@@ -35,6 +36,7 @@ public abstract class BaseTest {
             WebDriverManager.firefoxdriver().setup();
             FirefoxOptions options = new FirefoxOptions();
         }
+        testContext.setAttribute("driver", driver);
 
         loginPage = new LoginPage(driver);
         productsPage = new ProductsPage(driver);
