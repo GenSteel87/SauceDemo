@@ -23,9 +23,9 @@ public abstract class BaseTest {
     CheckoutPage checkoutPage;
     @Parameters({"browser"})
     @BeforeMethod(description = "Browser setup")
-    public void setup(@Optional("chrome") String browser, ITestContext testContext) {
+    public void setup(@Optional("firefox") String browser, ITestContext testContext) {
         System.out.println(System.getProperty("nazvanie"));
-        if(browser.equalsIgnoreCase("chrome")) {
+        if(browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
             options.addArguments("start-maximized");
@@ -47,6 +47,9 @@ public abstract class BaseTest {
 
     @AfterMethod(alwaysRun = true, description = "Close the browser")
     public void tearDown() {
+        if (driver == null) {
+            driver.quit();
+        }
         driver.quit();
     }
 }
